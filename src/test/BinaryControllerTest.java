@@ -57,4 +57,26 @@ public class BinaryControllerTest {
 			.andExpect(model().attribute("operand1", "111"));
     }
 
-}
+    @Test
+    public void postMultiplication() throws Exception {
+        this.mvc.perform(post("/").param("operand1","101").param("operator","*").param("operand2","10"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "1010"));
+    }
+    
+    @Test
+    public void postBitwiseAnd() throws Exception {
+        this.mvc.perform(post("/").param("operand1","1101").param("operator","&").param("operand2","1011"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "1001"));
+    }
+    
+    @Test
+    public void postBitwiseOr() throws Exception {
+        this.mvc.perform(post("/").param("operand1","1101").param("operator","|").param("operand2","1011"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "1111"));
+    }
